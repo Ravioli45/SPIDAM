@@ -1,9 +1,11 @@
 # Handles primary communication between the controller and model
 
 import numpy as np
+import matplotlib.pyplot as plt
 from view import AppWindow
 
-from .figures import newFrequencyFigure, newSpectrogramFigure
+from .figures import newWaveformFigure, newSpectrogramFigure
+
 # external variables that store state
 current_sample_rate = None
 current_data = None
@@ -29,6 +31,11 @@ def receiveSoundFile(sample_rate, data):
     current_sample_rate = sample_rate
     current_data = data
 
-    # TODO pass newly created figures to the view
-    #
-    # window.update_images(some_data_for_the_view)
+    # creates new figures
+    waveform = newWaveformFigure()
+
+    # passes figures to the view
+    window.update_images(waveform)
+
+    # frees memory used by figures
+    plt.close(waveform)
