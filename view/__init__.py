@@ -1,1 +1,1 @@
-from .window import *
+from .window import AppWindow

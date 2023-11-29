@@ -30,7 +30,6 @@ class AppWindow(pyglet.window.Window):
     def __init__(self):
         super().__init__(1200, 675, caption="Audio Analyzer")
 
-        self.figures: list = []
         self.images: list = []
 
         self.gui_batch = pyglet.graphics.Batch()
@@ -69,3 +68,12 @@ class AppWindow(pyglet.window.Window):
         self.clear()
         self.gui_batch.draw()
 
+    def update_images(self, data):
+        # TODO improve update_images documentation
+        """
+        Called from model
+
+        receives relevant information from the model and processes accordingly
+        """
+        # TODO implement
+        pass
