@@ -32,7 +32,7 @@ def receiveSoundFile(sample_rate, data):
     current_data = data
 
     # creates new figures
-    waveform = newWaveformFigure()
+    waveform = newWaveformFigure(sample_rate, data)
 
     # passes figures to the view
     window.update_images(waveform)
