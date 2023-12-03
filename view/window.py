@@ -1,12 +1,12 @@
 import pyglet
 from pyglet.gui.widgets import PushButton
+from pyglet.image import ImageData
 from pyglet.shapes import BorderedRectangle
 from matplotlib.backends.backend_agg import FigureCanvasAgg
+from matplotlib.figure import Figure
 import pathlib
 from tkinter.filedialog import askopenfilename
-
-# TODO import functions from controller once it is implemented
-# from controller import ...
+import controller
 
 # telling pyglet where the assets folder is
 assets = pathlib.Path(__file__).parents[1] / "assets"
@@ -15,10 +15,10 @@ pyglet.resource.reindex()
 
 load_file_image = pyglet.resource.image("load_file_image.png")
 
-def figure_to_image(fig):
+def figure_to_image(fig: Figure) -> ImageData:
     canvas = FigureCanvasAgg(fig)
     data, (width, height) = canvas.print_to_buffer()
-    image = pyglet.image.ImageData(width, height, "RGBA", data, -4*width)
+    image = ImageData(width, height, "RGBA", data, -4*width)
     return image
 
 class AppWindow(pyglet.window.Window):
@@ -30,7 +30,8 @@ class AppWindow(pyglet.window.Window):
     def __init__(self):
         super().__init__(1200, 675, caption="Audio Analyzer")
 
-        self.images: list = []
+        self.image_index: int = 0
+        self.images: list[ImageData] = [ImageData(1, 1, "RGBA", "0000")]
 
         self.gui_batch = pyglet.graphics.Batch()
         self.gui_frame = pyglet.gui.Frame(self)
@@ -50,14 +51,10 @@ class AppWindow(pyglet.window.Window):
 
         Will pass path of selected file to the controller, otherwise does nothing
         """
-        chosen_file = askopenfilename(filetypes=[("Audio Files", "*.wav *.mp3 *.ogg")], title="Select File")
+        chosen_file: str = askopenfilename(filetypes=[("Audio Files", "*.wav *.mp3")], title="Select File")
 
         if chosen_file != "":
-            # TODO give file path to controller
-            # 
-            # self.figures = some_controller_function_that_doesnt_exist_yet(chosen_file)
-            # self.images = list(map(figure_to_image, self.figures))
-            pass
+            controller.loadFile(chosen_file)
 
     def on_draw(self):
         """
@@ -67,6 +64,7 @@ class AppWindow(pyglet.window.Window):
         """
         self.clear()
         self.gui_batch.draw()
+        self.images[self.image_index].blit(0, 50)
 
     def update_images(self, data):
         # TODO improve update_images documentation
@@ -75,5 +73,4 @@ class AppWindow(pyglet.window.Window):
 
         receives relevant information from the model and processes accordingly
         """
-        # TODO implement
-        pass
+        self.images[0] = figure_to_image(data)

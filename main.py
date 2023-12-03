@@ -1,5 +1,5 @@
-from view import AppWindow
 from model import get_window_instance
+from view import AppWindow
 
 import pyglet
 
