@@ -2,5 +2,8 @@ import librosa
 import model
 
 def loadFile(path):
-    y, sr = librosa.load(path, sr=None)
-    model.receiveSoundFile(sr, y)
+    try:
+        y, sr = librosa.load(path, sr=None)
+        model.receiveSoundFile(sr, y)
+    except Exception:
+        model.receiveSoundFile(None, None)
