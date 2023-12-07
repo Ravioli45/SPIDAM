@@ -5,7 +5,7 @@ import numpy as np
 import matplotlib.pyplot as plt
 from matplotlib.figure import Figure
 
-from .utils import calculateLength
+from .utils import calculateLength, convertToDecibels
 
 # global variables determining figure size and dimensions for all figures passed to view
 g_figSize = (16, 7)
@@ -24,6 +24,7 @@ def newWaveformFigure(sample_rate, data):
     ax = fig.add_subplot(111)
     ax.set_xlabel("Time (s)")
     ax.set_ylabel("Amplitude")
+    ax.set_title("Waveform")
 
     # plot entire graph
     ax.plot(xValues, data)
@@ -32,7 +33,10 @@ def newWaveformFigure(sample_rate, data):
 
 def newSpectrogramFigure(sample_rate, data):
     """
-    Returns a new figure of the spectrogram of the audio file.
+    Returns three arguments:
+    1. a new figure of the spectrogram of the audio file and
+    2. frequencies of the audio file
+    3. spectrum of the audio file
     """
     fig = Figure(g_figSize, dpi=g_dpi)
 
@@ -42,10 +46,20 @@ def newSpectrogramFigure(sample_rate, data):
 
     # gradient of colors matched to the intensity (dB) they represent
     cbar = fig.colorbar(im)
+    cbar.set_label("Intensity (dB)")
 
     # set relevant labels
     ax.set_xlabel("Time (s)")
-    ax.set_ylabel("Amplitude")
-    cbar.set_label("Intensity (dB)")
+    ax.set_ylabel("Frequency (Hz)")
+    ax.set_title("Audio spectrogram")
 
-    return fig
+    return fig, freqs, spectrum
+
+def newDecibelFigure(sample_rate, decibels):
+    """
+    NOT IMPLEMENTED
+    Returns a new figure of decibels over time with proper labels
+    """
+    # TODO
+    # implement this function
+    pass
