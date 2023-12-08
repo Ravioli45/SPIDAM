@@ -77,3 +77,6 @@ def receiveSoundFile(sample_rate, data):
     plt.close(mid_fig)
     plt.close(high_fig)
     plt.close(pow_fig)
+
+def openFileError():
+    window.update_images(None)
