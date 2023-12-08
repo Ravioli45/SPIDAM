@@ -4,7 +4,7 @@ import numpy as np
 import matplotlib.pyplot as plt
 from view import AppWindow
 
-from .figures import newWaveformFigure, newSpectrogramFigure, newDecibelFigure
+from .figures import newWaveformFigure, newSpectrogramFigure, newDecibelFigure, newPowerSpectrumFigure
 from .utils import getDecibels, calculateRT60, calculateLength
 
 # external variables that store state
@@ -46,7 +46,7 @@ def receiveSoundFile(sample_rate, data):
 
     # creates new figures
     waveform = newWaveformFigure(sample_rate, data)
-    specgram, freqs, spectrum = newSpectrogramFigure(sample_rate, data)
+    specgram, freqs, spectrum, t = newSpectrogramFigure(sample_rate, data)
 
     times = np.linspace(0, calculateLength(sample_rate, data), len(data))
 
@@ -60,19 +60,20 @@ def receiveSoundFile(sample_rate, data):
     high_freq_decibels = getDecibels(spectrum, freqs, g_highFreq)
     high_freq_calc = calculateRT60(high_freq_decibels, times)
 
-    # TODO
-    # retrieve relevant decibel information for each frequency (low, mid, and high) and create
-    # labelled figures to send to the view
-    # low_fig = newDecibelFigure(sample_rate, low_freq_decibels)
-    # mid_fig = newDecibelFigure(sample_rate, low_freq_decibels)
-    # high_fig = newDecibelFigure(sample_rate, low_freq_decibels)
+    low_fig = newDecibelFigure(t, low_freq_decibels)
+    mid_fig = newDecibelFigure(t, mid_freq_decibels)
+    high_fig = newDecibelFigure(t, high_freq_decibels)
 
+    pow_fig = newPowerSpectrumFigure(sample_rate, data)
+
+    seconds = calculateLength(sample_rate, data)
     # passes figures to the view
-    window.update_images(waveform)
+    window.update_images(([waveform, specgram, low_fig, mid_fig, high_fig, pow_fig], [low_freq_calc, mid_freq_calc, high_freq_calc], seconds))
 
     # frees memory used by figures
     plt.close(waveform)
     plt.close(specgram)
-    # plt.close(low_fig)
-    # plt.close(mid_fig)
-    # plt.close(high_fig)
+    plt.close(low_fig)
+    plt.close(mid_fig)
+    plt.close(high_fig)
+    plt.close(pow_fig)

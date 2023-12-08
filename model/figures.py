@@ -53,13 +53,25 @@ def newSpectrogramFigure(sample_rate, data):
     ax.set_ylabel("Frequency (Hz)")
     ax.set_title("Audio spectrogram")
 
-    return fig, freqs, spectrum
+    return fig, freqs, spectrum, t
 
-def newDecibelFigure(sample_rate, decibels):
+def newDecibelFigure(t, decibels):
     """
-    NOT IMPLEMENTED
     Returns a new figure of decibels over time with proper labels
     """
-    # TODO
-    # implement this function
-    pass
+    dec_fig = Figure(g_figSize, dpi=g_dpi)
+    ax = dec_fig.add_subplot(111)
+    ax.set_xlabel("Time (s)")
+    ax.set_ylabel("Power (dB)")
+
+    ax.plot(t, decibels)
+
+    return dec_fig
+
+def newPowerSpectrumFigure(sample_rate, data):
+    pow_fig = Figure(g_figSize, dpi=g_dpi)
+    ax = pow_fig.add_subplot(111)
+
+    ax.psd(data, Fs=sample_rate)
+
+    return pow_fig
