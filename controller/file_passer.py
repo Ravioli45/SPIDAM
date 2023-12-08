@@ -7,6 +7,7 @@ def loadFile(path):
     success = False
     try:
         y, sr = librosa.load(path, sr=None)
+        success = True
     except Exception:
         model.openFileError()
 

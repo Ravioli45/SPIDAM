@@ -68,7 +68,7 @@ def receiveSoundFile(sample_rate, data):
 
     seconds = calculateLength(sample_rate, data)
     # passes figures to the view
-    window.update_images(([waveform, specgram, low_fig, mid_fig, high_fig, pow_fig], [low_freq_calc, mid_freq_calc, high_freq_calc], seconds))
+    window.update_images(([waveform, specgram, low_fig, mid_fig, high_fig, pow_fig], [low_freq_calc[0], mid_freq_calc[0], high_freq_calc[0]], seconds))
 
     # frees memory used by figures
     plt.close(waveform)
