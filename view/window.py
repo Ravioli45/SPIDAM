@@ -43,6 +43,7 @@ class AppWindow(pyglet.window.Window):
     def __init__(self):
         super().__init__(1200, 675, caption="Audio Analyzer")
 
+        self.current_file = ""
         self.image_loaded: bool = False
         self.num_images: int = -1
         self.choosing_file: bool = False
@@ -68,9 +69,10 @@ class AppWindow(pyglet.window.Window):
         self.tall_rect = pyglet.sprite.Sprite(tall_rectangle, x=300, y=575, batch=self.gui_batch)
 
         self.label_batch = pyglet.graphics.Batch()
-        self.time_label = Label("Time: ", "Calibri", font_size=25, color=(0, 0, 0, 255), x=15, y=12.5, width=100, height=20, batch=self.label_batch, dpi=100)
-        self.rt60_label = Label("RT60: ", "Calibri", font_size=25, color=(0, 0, 0, 255), x=600, y=12.5, width=75, height=20, batch=self.label_batch)
-        self.title_label = Label("", "Calibri", font_size=50, color=(0, 0, 0, 255), x=300, y=600, width=900, height=100, align='center', batch=self.label_batch)
+        self.file_label = Label("File: ", "Calibri", font_size=25, color=(0, 0, 0, 255), x=15, y=12.5, width=100, height=20, batch=self.label_batch, dpi=100)
+        self.time_label = Label("Time: ", "Calibri", font_size=25, color=(0, 0, 0, 255), x=600, y=12.5, width=100, height=20, batch=self.label_batch, dpi=100)
+        self.rt60_label = Label("RT60: ", "Calibri", font_size=25, color=(0, 0, 0, 255), x=900, y=12.5, width=75, height=20, batch=self.label_batch, dpi=100)
+        self.title_label = Label("", "Calibri", font_size=50, color=(0, 0, 0, 255), x=300, y=600, width=900, height=100, align='center', batch=self.label_batch, dpi=100)
 
         self.static_gui_frame.add_widget(self.load_file_button)
 
@@ -85,6 +87,8 @@ class AppWindow(pyglet.window.Window):
             chosen_file: str = askopenfilename(filetypes=[("Audio Files", "*.wav *.mp3")], title="Select File")
             self.choosing_file = False
             if chosen_file != "":
+                chosen_path = pathlib.Path(chosen_file)
+                self.current_file = chosen_path.name
                 controller.loadFile(chosen_file)
 
     def on_draw(self):
@@ -121,6 +125,7 @@ class AppWindow(pyglet.window.Window):
         self._update_time_label(data[2])
         self._update_rt60_label()
         self._update_title_label()
+        self._update_file_label(self.current_file)
 
         if not self.image_loaded:
             self._create_sliders()
@@ -183,3 +188,6 @@ class AppWindow(pyglet.window.Window):
 
     def _update_title_label(self):
         self.title_label.text = self.titles[self.image_index]
+
+    def _update_file_label(self, filename):
+        self.file_label.text = f"File: {filename:.20}"

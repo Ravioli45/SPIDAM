@@ -60,13 +60,15 @@ def receiveSoundFile(sample_rate, data):
     high_freq_decibels = getDecibels(spectrum, freqs, g_highFreq)
     high_freq_calc = calculateRT60(high_freq_decibels, times)
 
-    low_fig = newDecibelFigure(t, low_freq_decibels)
-    mid_fig = newDecibelFigure(t, mid_freq_decibels)
-    high_fig = newDecibelFigure(t, high_freq_decibels)
+    seconds = calculateLength(sample_rate, data)
+
+    low_fig = newDecibelFigure(seconds, t, low_freq_decibels)
+    mid_fig = newDecibelFigure(seconds, t, mid_freq_decibels)
+    high_fig = newDecibelFigure(seconds, t, high_freq_decibels)
 
     pow_fig = newPowerSpectrumFigure(sample_rate, data)
 
-    seconds = calculateLength(sample_rate, data)
+    
     # passes figures to the view
     window.update_images(([waveform, specgram, low_fig, mid_fig, high_fig, pow_fig], [low_freq_calc[0], mid_freq_calc[0], high_freq_calc[0]], seconds))
 

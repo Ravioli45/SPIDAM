@@ -18,10 +18,12 @@ def newWaveformFigure(sample_rate, data):
     fig = Figure(g_figSize, dpi=g_dpi)
 
     # determines the values of the x axis
-    xValues = np.linspace(0, calculateLength(sample_rate, data), len(data))
+    length = calculateLength(sample_rate, data)
+    xValues = np.linspace(0, length, len(data))
 
     # creates the x axis on the figure
     ax = fig.add_subplot(111)
+    ax.set_xlim(0, length)
     ax.set_xlabel("Time (s)")
     ax.set_ylabel("Amplitude")
     ax.set_title("Waveform")
@@ -55,12 +57,13 @@ def newSpectrogramFigure(sample_rate, data):
 
     return fig, freqs, spectrum, t
 
-def newDecibelFigure(t, decibels):
+def newDecibelFigure(seconds, t, decibels):
     """
     Returns a new figure of decibels over time with proper labels
     """
     dec_fig = Figure(g_figSize, dpi=g_dpi)
     ax = dec_fig.add_subplot(111)
+    ax.set_xlim(0, seconds)
     ax.set_xlabel("Time (s)")
     ax.set_ylabel("Power (dB)")
 
