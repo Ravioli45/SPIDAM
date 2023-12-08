@@ -1,0 +1,16 @@
+[project]
+name = "SPIDAM"
+version = "0.2.0"
+dependencies = [
+    "pyglet",
+    "matplotlib=3.7.3",
+    "librosa",
+]
+requires-python = "3.11.*"
+authors = [
+    {name = "Joseph Elibri", email = "elibrij@gmail.com"},
+    {name = "Norbert Krajewski", email = "norberttony@icloud.com"},
+    {name = "Viktor Johansen", email = "viktorjohansen@outlook.com"},
+]
+description = "Sound reverberation time analysis"
+readme = "README.md"

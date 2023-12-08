@@ -13,9 +13,9 @@ g_current_data = None
 g_window = None
 
 # constants for low, mid, and high frequencies
-g_lowFreq = 1000
-g_midFreq = 2500
-g_highFreq = 5000
+g_lowFreq = 250
+g_midFreq = 1000
+g_highFreq = 4000
 
 def get_window_instance(app: AppWindow):
     global window

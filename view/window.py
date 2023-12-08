@@ -28,6 +28,8 @@ right_slider_hover.anchor_x = 0
 tall_rectangle = pyglet.resource.image("small_rectangle.png")
 wide_rectangle = pyglet.resource.image("big_rectangle.png")
 
+icon = pyglet.resource.image("speaker_icon.png")
+
 def figure_to_image(fig: Figure) -> ImageData:
     canvas = FigureCanvasAgg(fig)
     data, (width, height) = canvas.print_to_buffer()
@@ -42,6 +44,7 @@ class AppWindow(pyglet.window.Window):
     """
     def __init__(self):
         super().__init__(1200, 675, caption="Audio Analyzer")
+        self.set_icon(icon)
 
         self.current_file = ""
         self.image_loaded: bool = False
