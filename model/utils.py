@@ -56,15 +56,17 @@ def calculateRT60(decibels, times):
 
     # value and index minus 5 dB
     valueMaxM5 = getClosestValue(postMax, valueMax - 5)
-    indexMaxM5 = np.where(decibels == valueMaxM5)
+    indexMaxM5 = np.where(postMax == valueMaxM5)[0][0]
 
     # value and index minus 25 dB
     valueMaxM25 = getClosestValue(postMax, valueMax - 25)
-    indexMaxM25 = np.where(decibels == valueMaxM25)
+    indexMaxM25 = np.where(postMax == valueMaxM25)[0][0]
 
-    rt20 = (times[indexMaxM25] - times[indexMaxM5])[0]
+    offset = len(decibels) - len(postMax)
 
-    return (3 * rt20, indexMax, valueMax)
+    rt20 = times[indexMaxM25 + offset] - times[indexMaxM5 + offset]
+
+    return (3 * rt20, indexMax, valueMax, indexMaxM25 + offset)
 
 def calculateResonantFreq(spectrum, freqs):
     """

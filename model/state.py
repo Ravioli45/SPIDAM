@@ -48,17 +48,15 @@ def receiveSoundFile(sample_rate, data):
     waveform = newWaveformFigure(sample_rate, data)
     specgram, freqs, spectrum, t = newSpectrogramFigure(sample_rate, data)
 
-    times = np.linspace(0, calculateLength(sample_rate, data), len(data))
-
     # perform RT60 calculations for low, mid, and high frequencies
     low_freq_decibels = getDecibels(spectrum, freqs, g_lowFreq)
-    low_freq_calc = calculateRT60(low_freq_decibels, times)
+    low_freq_calc = calculateRT60(low_freq_decibels, t)
 
     mid_freq_decibels = getDecibels(spectrum, freqs, g_midFreq)
-    mid_freq_calc = calculateRT60(mid_freq_decibels, times)
+    mid_freq_calc = calculateRT60(mid_freq_decibels, t)
     
     high_freq_decibels = getDecibels(spectrum, freqs, g_highFreq)
-    high_freq_calc = calculateRT60(high_freq_decibels, times)
+    high_freq_calc = calculateRT60(high_freq_decibels, t)
 
     seconds = calculateLength(sample_rate, data)
 

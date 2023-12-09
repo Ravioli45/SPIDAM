@@ -63,7 +63,7 @@ def newDecibelFigure(seconds, t, decibels):
     """
     dec_fig = Figure(g_figSize, dpi=g_dpi)
     ax = dec_fig.add_subplot(111)
-    ax.set_xlim(0, seconds)
+    # ax.set_xlim(0, seconds)
     ax.set_xlabel("Time (s)")
     ax.set_ylabel("Power (dB)")
 
