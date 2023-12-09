@@ -71,10 +71,19 @@ def newDecibelFigure(seconds, t, decibels):
 
     return dec_fig
 
-def newPowerSpectrumFigure(sample_rate, data):
-    pow_fig = Figure(g_figSize, dpi=g_dpi)
-    ax = pow_fig.add_subplot(111)
+def newCombinedDecibelFigure(seconds, t, low_decibel, mid_decibel, high_decibel):
+    """
+    Creates a combined graphic of the low decibel, mid decibel, and high decibel graphs
+    """
+    combined_figure = Figure(g_figSize, dpi=g_dpi)
+    ax = combined_figure.add_subplot(111)
+    ax.set_xlim(0, seconds)
+    ax.set_xlabel("Time (s)")
+    ax.set_ylabel("Power (dB)")
 
-    ax.psd(data, Fs=sample_rate)
+    ax.plot(t, low_decibel, label="Low Frequency")
+    ax.plot(t, mid_decibel, label="Mid Frequency")
+    ax.plot(t, high_decibel, label="High Frequency")
+    ax.legend(loc="upper left")
 
-    return pow_fig
+    return combined_figure
