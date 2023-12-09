@@ -5,7 +5,7 @@ import matplotlib.pyplot as plt
 from view import AppWindow
 
 from .figures import newWaveformFigure, newSpectrogramFigure, newDecibelFigure, newPowerSpectrumFigure
-from .utils import getDecibels, calculateRT60, calculateLength
+from .utils import getDecibels, calculateRT60, calculateLength, calculateResonantFreq
 
 # external variables that store state
 g_current_sample_rate = None
@@ -68,7 +68,9 @@ def receiveSoundFile(sample_rate, data):
 
     pow_fig = newPowerSpectrumFigure(sample_rate, data)
 
-    
+    # calculate the resonant frequency
+    res_freq = calculateResonantFreq(spectrum, freqs)
+
     # passes figures to the view
     window.update_images(([waveform, specgram, low_fig, mid_fig, high_fig, pow_fig], [low_freq_calc[0], mid_freq_calc[0], high_freq_calc[0]], seconds))
 

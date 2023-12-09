@@ -65,3 +65,16 @@ def calculateRT60(decibels, times):
     rt20 = (times[indexMaxM25] - times[indexMaxM5])[0]
 
     return (3 * rt20, indexMax, valueMax)
+
+def calculateResonantFreq(spectrum, freqs):
+    """
+    Calculates the resonant frequency given spectrum and frequencies.
+
+    Resonant frequency is the frequency at which the greatest power (in dB) occurs.
+    Since the application converts amplitude to dB with 10 * log10(amp), no conversion to decibels
+    is actually done as it is not necessary (the greatest amp should result in the greatest dB).
+    """
+    val = spectrum.argmax()
+    indices = np.unravel_index(val, spectrum.shape)
+    res_freq = freqs[indices[0]]
+    return res_freq
