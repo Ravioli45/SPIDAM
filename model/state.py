@@ -4,7 +4,7 @@ import numpy as np
 import matplotlib.pyplot as plt
 from view import AppWindow
 
-from .figures import newWaveformFigure, newSpectrogramFigure, newDecibelFigure, newPowerSpectrumFigure
+from .figures import newWaveformFigure, newSpectrogramFigure, newDecibelFigure, newCombinedDecibelFigure
 from .utils import getDecibels, calculateRT60, calculateLength, calculateResonantFreq
 
 # external variables that store state
@@ -66,13 +66,13 @@ def receiveSoundFile(sample_rate, data):
     mid_fig = newDecibelFigure(seconds, t, mid_freq_decibels)
     high_fig = newDecibelFigure(seconds, t, high_freq_decibels)
 
-    pow_fig = newPowerSpectrumFigure(sample_rate, data)
+    combined_fig = newCombinedDecibelFigure(seconds, t, low_freq_decibels, mid_freq_decibels, high_freq_decibels)
 
     # calculate the resonant frequency
     res_freq = calculateResonantFreq(spectrum, freqs)
 
     # passes figures to the view
-    window.update_images(([waveform, specgram, low_fig, mid_fig, high_fig, pow_fig], [low_freq_calc[0], mid_freq_calc[0], high_freq_calc[0]], seconds))
+    window.update_images(([waveform, specgram, low_fig, mid_fig, high_fig, combined_fig], [low_freq_calc[0], mid_freq_calc[0], high_freq_calc[0]], seconds, res_freq))
 
     # frees memory used by figures
     plt.close(waveform)
@@ -80,7 +80,7 @@ def receiveSoundFile(sample_rate, data):
     plt.close(low_fig)
     plt.close(mid_fig)
     plt.close(high_fig)
-    plt.close(pow_fig)
+    plt.close(combined_fig)
 
 def openFileError():
     window.update_images(None)
