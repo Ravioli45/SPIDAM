@@ -2,6 +2,9 @@
 
 import numpy as np
 
+# supress numpy division warnings
+np.seterr(divide='ignore')
+
 def calculateLength(sample_rate, data):
     """
     Returns the length, in seconds, of the audio 
