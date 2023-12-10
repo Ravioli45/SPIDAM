@@ -14,7 +14,7 @@ analyzing sound and the reverberation time of the sound
 
 2. Install project dependencies with pip
     ```sh
-    pip install -r requirments.txt
+    pip install -r requirements.txt
     ```
 
 3. Run main.py to start the application
