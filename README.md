@@ -11,10 +11,12 @@ analyzing sound and the reverberation time of the sound
     cd SPIDAM
     ```
 [source code]: https://github.com/Ravioli45/SPIDAM/
+
 2. Install project dependencies with pip
     ```sh
     pip install -r requirments.txt
     ```
+
 3. Run main.py to start the application
     ```sh
     python main.py
