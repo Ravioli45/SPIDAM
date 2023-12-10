@@ -1,7 +1,7 @@
 # Change Log
 This is where changes between versions will be documented
 
-# [0.2.0]
+## [0.2.0]
 Added graphs for spectrogram and decibels of low, mid, and high frequencies
 
 Added text to display length of file in seconds, file name, rt60 values, 
